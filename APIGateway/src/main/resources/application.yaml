@@ -1,0 +1,30 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  config:
+    import: configserver:http://${CONFIG_SERVER_URL:localhost}:9286
+  cloud:
+    gateway:
+      routes:
+        - id: Player-Statistics
+          uri: lb://Player-Statistics
+          predicates:
+            - Path=/player/**
+          filter:
+            - name: CircuitBreaker
+              args:
+                name: Player-Statistics
+                fallbackuri: forward:/playerServiceFallBack
+
+        - id: Aggregate-Service
+          uri: lb://Aggregate-Service
+          predicates:
+            - Path=/aggregate/**
+          filter:
+            - name: CircuitBreaker
+              args:
+                name: Aggregate-Service
+                fallbackuri: forward:/aggregateServiceFallBack

@@ -1,0 +1,28 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aggregate
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  application:
+    name: Aggregate-Service
+  config:
+    import: configserver:http://localhost:9286
+
+
+#  pukhBWVEvhKTaGZJslSQnT+I93GDJ598AKZi8uct   secret
+#  AKIAR5UNOUROHXCPBSDM   access
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
